@@ -1,0 +1,42 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        firephp:
+            type:  firephp
+            level: info
+        chromephp:
+            type:  chromephp
+            level: info
+
+# arild removed and put in main config so both prod and dev uses it.
+#assetic:
+#    use_controller: true
+
+#swiftmailer:
+#    delivery_address: me@example.com
+
+assetic:
+    use_controller: true

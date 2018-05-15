@@ -1,0 +1,22 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Cecilie Jackbo Gran/Sinett 3.0 programme (firstname.middlename.lastname@ffi.no)
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+<tr id="row_help_{{ entity.id }}">
+    
+    <td>
+        <a href="{{ path('help_edit', { 'id': entity.id }) }}" title="{% trans %}app.system.admin.help.tooltip.route{% endtrans %}">
+            {{ entity.route }}
+        </a>  
+    </td>
+    <td class="mlab_max_width_extra_long mlab_min_width_medium ">{{ entity.message }}</td>
+    <td>
+        <a href="{{ path('help_delete', { 'id': entity.id }) }}" class="mlab_icon_delete" title="{% trans %}app.system.admin.help.tooltip.delete{% endtrans %} '{{ entity.route }}'"></a>
+	</td>
+</tr>

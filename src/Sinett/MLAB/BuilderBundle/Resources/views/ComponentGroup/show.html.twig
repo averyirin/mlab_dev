@@ -1,0 +1,41 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ComponentGroup</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Credential</th>
+                <td>{{ entity.credential }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('componentgroup') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('componentgroup_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,247 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+@author Cecilie Jackbo Gran/Sinett 3.0 programme (firstname.middlename.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+{% extends "::base.html.twig" %}
+
+{% block title %}{% trans %}mlab.page.title.admin{% endtrans %}{% endblock %}
+
+
+{% block body %}
+
+{% set currentPath = path(app.request.attributes.get('_route'),
+                           app.request.attributes.get('_route_params')) %}
+
+{% if  path('admin_apps') in currentPath  %}
+	<h1>{% trans %}app.admin.apps.welcome{% endtrans %}</h1>
+{% elseif  path('admin_users') in currentPath %}
+	<h1>{% trans %}app.admin.users.welcome{% endtrans %}</h1>
+{% elseif path('system') in currentPath %}
+	<h1>{% trans %}app.system.admin.welcome{% endtrans %}</h1>
+{% endif %}
+
+	<div id="tabs_admin_apps">
+	  <ul>
+	  	{% for href, tab in tabs %}
+	    	<li><a href="{{ path(href) }}">{% trans %}%tab%{% endtrans %}</a></li>
+	    {% endfor %}
+	  </ul>
+	</div>
+	<progress value="0" max="0" class="hidden"></progress>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/themes/default/style.min.css" />
+	{{ parent() }}
+{% endblock %}
+    
+{% block javascripts %}
+	{{ parent() }}
+    <script src='{{ asset('/js/jstree-3.3.3.js') }}'></script>
+	<script>
+
+        function getTreeAsArray(obj, tags) {
+            tags.push({text: obj.text});
+            if (obj.children.length > 0) {
+                tags[tags.length -1]["children"] = [];
+                for (i in obj.children) {
+                    getTreeAsArray(obj.children[i], tags[tags.length -1]["children"]);
+                }
+            } 
+        }
+        
+        function progressHandlingFunction(e){
+		    if(e.lengthComputable){
+		        $('progress').attr({value:e.loaded,max:e.total});
+		    }
+		}
+		
+		function errorHandler(e) {
+			console.log(e);
+		}
+/**
+ * This function will send data back to the forms action using ajax
+ * the result should be the index page which we display in the calling tab
+ */
+  		function assignSubmitDataHandler(dialog_id) {
+            console.log("Assign - #" + dialog_id + " form");
+            
+//TODO: major hack to stop password from being required for user when edit record. better to do on backend
+            var action = $( "#" + dialog_id + " form").attr("action");
+            if (action.search("/user/") >= 0 && action.search("/update") > 0) {
+                $( "#" + dialog_id + " form").find("#sinett_mlab_builderbundle_user_plainPassword").removeAttr("required");
+            }
+            
+  			$( "#" + dialog_id + " form").submit(function( event ) {
+                console.log("Submit - #" + dialog_id + " form");
+  				event.preventDefault();
+  				$( "#" + dialog_id ).dialog( "close" );
+  				
+  				var form = $( this ),
+			    	url = form.attr( "action" ),
+  					formData = new FormData(this);
+  				
+  			    $.ajax({
+  			        url: form.attr( "action" ),  //Server script to process data
+  			        type: 'POST',
+  			        xhr: function() {  // Custom XMLHttpRequest
+  			            var myXhr = $.ajaxSettings.xhr();
+  			            if(myXhr.upload){ // Check if upload property exists
+  			                myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload 
+  			            }
+  			            return myXhr;
+  			        },
+  			        success: function( data ) {
+                        
+  	  			    	if (data.result == 'FAILURE') {
+                            if (typeof data.message != "undefined") {
+                                alert(data.message);
+                            } else {
+                                alert("{% trans %}app.system.admin.alert.Unable.to.update.record{% endtrans %}");
+                            }
+  	  			    	} else {
+  	  			    		if (data.action == 'ADD') {
+                                $("#table_" + data.db_table + " tr:last").after(data.record);
+                                $("#table_" + data.db_table + " tr:last").find("a").each(function () {
+                                    prepare_links(this, "ui-id-" + ($('#tabs_admin_apps').tabs('option','active') + 1));
+                                    } // end function to run for each link  
+                                ); // end each function 
+                               
+  	  			    		} else if (data.action == 'EDIT' || data.action == 'UPDATE') {
+  	  			    			$("#row_" + data.db_table + "_" + data.db_id).replaceWith(data.record);
+                                $("#row_" + data.db_table + "_" + data.db_id).find("a").each(function () {
+                                    prepare_links(this, "ui-id-" + ($('#tabs_admin_apps').tabs('option','active') + 1));
+                                    } // end function to run for each link  
+                                ); // end each function 
+/* TODO OUT
+    //hack to display updated category list which always return the whole list when added
+  	  			    		} else if ($('#tabs_admin_apps').tabs('option','active') == 0) {
+                                $("#tabs_admin_apps div.ui-tabs-panel[aria-hidden='false']").html(data);
+                                $("#tabs_admin_apps div.ui-tabs-panel[aria-hidden='false'] .records_list").find("a").each(function () {
+                                    prepare_links(this, "ui-id-1");
+                                } // end function to run for each link   
+                                ); // end each function */
+                            }                           
+                            
+  	  			    	}
+  	  			  	},                        
+  			        error: errorHandler,
+  			        // Form data 
+  			        data: formData,
+  			        //Options to tell jQuery not to process data or worry about content-type. 
+  			        cache: false,
+  			        contentType: false,
+  			        processData: false
+  			    });
+
+  			}); 
+	  	}
+
+/**
+ * Initialises the tabs on this page
+ */
+ 		$(document).ready(function() {
+		    $( "#tabs_admin_apps" ).tabs({
+		    	load: function( event, ui ) {
+		    		$(ui.panel[0]).find("a").each(function () {
+		    			prepare_links(this, "ui-id-" + ($('#tabs_admin_apps').tabs('option','active') + 1));
+		    			} // end function to run for each link  
+		    		); // end each function 
+		    	}, // end load parameters 
+		    	
+		      	beforeLoad: function( event, ui ) {
+		        	ui.jqXHR.error(function() {
+		          		ui.panel.html("{% trans %}app.system.admin.alert.waiting.to.load.data{% endtrans %}");
+		        	});
+		      	}
+		    });
+		});
+		
+//makes all the regular a href links into ajax links by stopping default action and loading manually into a dlg box
+        function prepare_links(element, ui_id) {
+            var temp_url_elements = element.href.split("/");
+            var this_link = temp_url_elements[temp_url_elements.length - 1];
+            var this_id = temp_url_elements[temp_url_elements.length - 2];
+            var this_entity = temp_url_elements[temp_url_elements.length - 3];
+            $(element).bind( "click", {
+                                    dialog_id: ui_id + "_dialog_" + this_link, 
+                                    link: this_link,
+                                    entity: this_entity,
+                                    id: this_id
+                                }, //end parameters to send to function that is bound 
+
+        // this function is called when a link is clicked, the last parameter indicates action (new, delete, etc)
+        // we use this to see what we should do 
+                                function( event ) {
+                                    event.preventDefault();
+        // check if want to delete, then send request back. 
+        //May be denied depending on what roles they have, if record is used for somethign etc.
+                                    if ( event.data.link == "delete" ) { 
+                                        if (confirm("{% trans %}app.system.admin.alert.delete.item{% endtrans %}")) {
+                                            $.getJSON("{{ path('sinett_mlab_builder_homepage') }}" + event.data.entity + "/" + event.data.id + "/delete", function( data ) {
+                                                if (data.result == "SUCCESS" && parseInt(data.db_id) > 0) {
+        //treeviews use a div inside a list item, need to delete parent 
+                                                    if ($("#row_" + data.db_table + "_" + data.db_id).prop('tagName').toLowerCase() == "div") {
+                                                        $("#row_" + data.db_table + "_" + data.db_id).parent().remove();
+                                                    } else {
+                                                        $("#row_" + data.db_table + "_" + data.db_id).remove();
+                                                    }
+                                                } else {
+                                                    alert("{% trans %}app.system.admin.alert.Unable.to.delete.record{% endtrans %}" + data.message);
+                                                }
+                                            });
+                                        }
+                                        
+        // we have special case for toggle enabled
+                                    } else if ( event.data.link == "toggle_state" ) {
+                                        $.getJSON("{{ path('sinett_mlab_builder_homepage') }}" + event.data.entity + "/" + event.data.id + "/toggle_state", function( data ) {
+                                            if (data.result == "SUCCESS" && parseInt(data.db_id) > 0) {
+                                                $("#row_" + data.db_table + "_" + data.db_id).replaceWith(data.record);
+                                                $("#row_" + data.db_table + "_" + data.db_id).find("a").each(function () {
+                                                    prepare_links(this, "ui-id-" + ($('#tabs_admin_apps').tabs('option','active') + 1));
+                                                    } // end function to run for each link  
+                                                ); // end each function 
+                                            }
+                                        });
+
+        // not delete and dialog box is not created yet, so make new one and fill it 
+                                    } else if ($("#" + event.data.dialog_id).length == 0 ) {  
+                                        $('<div/>', { 'class': 'dlg_edit_data', 'id': event.data.dialog_id } )
+                                            .load( $(this).attr('href'), function() { assignSubmitDataHandler(event.data.dialog_id); } )
+                                            .appendTo('body')
+                                            .dialog({ modal: true, width: 550 });
+
+        // need to reload data if edit record AND already created dialog box
+                                    } else if ( event.data.link == "edit" ) {  
+                                        if (event.data.entity == "group") {
+//special case for group editing, the jstree function needs to be reinitialised to function OK
+                                            $("#" + event.data.dialog_id).load( $(this).attr('href'), function() { mlab_category_init(); assignSubmitDataHandler(event.data.dialog_id); $("#" + event.data.dialog_id).dialog().show(); } )
+                                        } else {
+                                            $("#" + event.data.dialog_id).load( $(this).attr('href'), function() { assignSubmitDataHandler(event.data.dialog_id); $("#" + event.data.dialog_id).dialog().show(); } )
+                                        }
+
+        // in all other cases just re-display dialog box, usually for new record
+        // remember: new can be both new and adminNew if change this to use specific event.data.link if clause
+                                    } else { 
+                                        if ($("#" + event.data.dialog_id + ' form').length > 0) {
+                                            $("#" + event.data.dialog_id + ' form')[0].reset();
+                                        }
+                                        if (event.data.entity = "category") {
+                                            $("#sinett_mlab_builderbundle_category_parent").val(event.data.id);
+                                        }
+                                        $("#" + event.data.dialog_id).dialog().show();
+                                        
+                                    } // end check if loaded 
+                                } // end function to run when click 
+                    ) // end bind call         
+        }
+
+    
+	</script>
+{% endblock %}

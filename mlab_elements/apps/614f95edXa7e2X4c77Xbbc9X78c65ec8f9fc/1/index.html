@@ -1,0 +1,182 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Prices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="mlab:app_uid" content="com.test.apps.614f95edXa7e2X4c77Xbbc9X78c65ec8f9fc" />
+<link rel="stylesheet" href="./css/include.css" />
+<link rel="stylesheet" href="./css/jquery-mobile.css" />
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/style_rt.css" />
+<link rel="stylesheet" href="./css/mlab_component.css" />
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery-ui.js"></script>
+<script src="./js/jquery-mobile.js"></script>
+<script src="./js/mlab.api.js"></script>
+<script src="./js/basic.js"></script>
+<script src="./js/include.js"></script>
+
+<script>
+		$(function(){
+			$("[data-role=header],[data-role=footer]").toolbar();
+            $( "[data-role='panel']" ).panel();
+		});
+</script>
+
+<script>
+    //&amp;amp;lt;![CDATA[
+    
+    /**
+     * When document is ready we initialise the load code for the jquery mobile functionality
+     * This is done by assigning the mlab.api.navigation.pageDisplay call to various page navigation elements
+     * @type type
+     */
+    function mlabInitialiseApp() {
+        console.log("FUNCTION: mlabInitialiseApp");
+//Uses on pagecreate to get the page name to display when the page is loaded the first time
+/*        $( document ).on( "pagebeforeshow", function( event ) {  
+            console.log("FUNCTION: pagebeforeshow");
+            var page = $.mobile.pageContainer.pagecontainer('getActivePage');
+            var pageTitle = page.data("title");
+            page.find(".mlab_page_name").text(pageTitle);
+        });
+*/        
+        mlab.api.navigation.initialise(0, "%%MLAB_CT_FUNC_GETNUMBEROFPAGES%%");
+        
+    };
+  
+    $(document).on('pagecreate', '#mlab_index_page', function(e) {
+        console.log("EVENT: pagecreate for index page");
+  
+        //Opens the previous page 
+        $(".mlab_nav_previous_page").on("click", function () { mlab.api.navigation.pageDisplay("previous"); });
+        //Opens the next page 
+        $(".mlab_nav_next_page").on("click", function () { mlab.api.navigation.pageDisplay("next"); });
+        //Toggles the text and background color            
+        $(".mlab_btn_color_toggle").on("vclick", function () { mlab.api.settings.pageColorToggle("mlab_page_body", "mc_text"); });
+        //Toggles the text size between 100% and 130%       
+        $(".mlab_btn_txsize_toggle").on("vclick", function () { mlab.api.settings.pageTextSizeToggle("mlab_main_body_content"); });
+
+    });
+</script>
+
+
+</head>
+<body id="mlab_page_body">
+               <!-- MENU Panel -->
+        <div data-role="panel" id="mlab_menu_panel" data-position="left" data-display="overlay" data-theme="a" class="mlab_menu_panel mlab_hide_in_app_builder ui-panel ui-panel-position-left ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+            <div class="ui-panel-inner">
+                <!-- Menu panel content goes here -->
+                <a href="#" data-rel="close"><div class="mlab_btn_close_menu"></div></a>
+                <div class="mlab_menu_heading">Meny</div>
+                <hr class="mlab_hr_panel" />
+                <div class="mlab_menu_text">%%MLAB_CT_COMP_INDEX%%</div>
+            </div>
+        </div><!-- /Menu panel -->
+        
+         <!-- SETTINGS Panel -->
+        <div data-role="panel" id="mlab_settings_panel" data-position="right" data-display="overlay" data-theme="b" class="mlab_settings_panel mlab_hide_in_app_builder ui-panel ui-panel-position-right ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+            <div class="ui-panel-inner">
+                <!-- Settings panel content goes here -->
+                <div class="mlab_creators">Made by Sinett</div> 
+                <a href="#" data-rel="close"><div class="mlab_btn_close"></div></a>
+                <div class="mlab_settings_heading">Settinger</div>
+                <hr class="mlab_hr_panel" />
+                <div class="mlab_btn_color_toggle"></div>
+                <div class="mlab_btn_txsize_toggle"></div> 
+            </div>
+        </div><!-- /Settings panel -->
+        
+        <!-- The HEADER with navigation, menu and settings -->
+        <div data-role="header" data-theme="a" class="mlab_header mlab_hide_in_app_builder" data-position="fixed">  
+            <div class="mlab_header_box">
+                <a href="#mlab_menu_panel"><div class="mlab_btn_menu btn_secondary"></div></a>
+                <div class="mlab_nav_previous_page"></div>
+                <div class="mlab_page_name"></div> 
+                <a href="#mlab_settings_panel"><div class="mlab_btn_settings"></div></a>
+                <div class="mlab_nav_next_page"></div>
+            </div>
+        </div><!-- /Header -->
+        
+    <div data-role="page" id="mlab_index_page">
+        
+        <!-- The CONTENT of the page - are filled in via the App builder -->
+        <div class="mlab_content_wrapper">
+            <div role="main" class="mlab_main_body_content">
+                <div id="mlab_editable_area" class="mlab_editable_area"><div data-mlab-type="h1" style="display: block; outline-color: rgb(225, 225, 225);" class="ui-droppable ui-sortable ui-sortable-handle"><h1 class="mc_text mc_display mc_heading mc_large">Pizza Prices</h1></div><div data-mlab-type="p" style="display: block; outline-color: rgb(225, 225, 225);" class="ui-droppable ui-sortable ui-sortable-handle"><p class="mc_text mc_display mc_medium">This table shows the price of the pizza</p></div><div data-mlab-type="table" style="display: block; outline-color: rgb(225, 225, 225);" class="ui-droppable ui-sortable ui-sortable-handle" data-hasqtip="14" aria-describedby="qtip-14"><table style="width:100%" class="mc_container">
+  <thead>
+    <tr class="mc_list">
+      <th class="mc_text mc_entry mc_heading mc_medium" tabindex="0">Item</th>
+      <th class="mc_text mc_entry mc_heading mc_medium" tabindex="0">price</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="mc_list">
+      <td class="mc_text mc_entry mc_item" tabindex="0">Small</td>
+      <td class="mc_text mc_entry mc_item" tabindex="0">$1.00</td> 
+    </tr><tr class="mc_list"><td class="mc_text mc_entry mc_item" tabindex="0">Medium</td><td class="mc_text mc_entry mc_item" tabindex="0">$2.33<br /></td></tr><tr class="mc_list"><td class="mc_text mc_entry mc_item" tabindex="0">Large</td><td class="mc_text mc_entry mc_item" tabindex="0">$4.33</td></tr><tr class="mc_list"><td class="mc_text mc_entry mc_item" tabindex="0">X-Large</td><td class="mc_text mc_entry mc_item" tabindex="0" data-mlab-dt-table-focus="1">$5.50</td></tr>
+  </tbody>
+</table>
+</div></div>
+            </div>
+        </div><!-- /Content -->
+
+    </div>   
+        
+    <script>
+        $( document ).on( "pagecreate",function ( event ) {
+            
+            if (mlab.api == null) {
+               var curr_page = 0;
+            } else {
+                var curr_page = mlab.api.navigation.current_page;
+            }
+
+            var last_page = Number("%%MLAB_CT_FUNC_GETNUMBEROFPAGES%%");
+            switch (curr_page) {
+
+                case 0:
+                    //First page in the app
+                    if ($(".mlab_nav_previous_page").hasClass('mlab_hide')) {
+                        // do nothing
+                    } else {
+                        //hide the previous button on the first page
+                        $(".mlab_nav_previous_page").addClass('mlab_hide'); 
+                    }
+                    if (last_page == 0) {
+                        //the app only has one page - hide the next button
+                        $(".mlab_nav_next_page").addClass('mlab_hide'); 
+                    } else if ($(".mlab_nav_next_page").hasClass('mlab_hide')) {
+                        $(".mlab_nav_next_page").removeClass('mlab_hide');
+                    }
+                    break;
+
+                case last_page:
+                    //Last page in the app and the app has more than one page
+                    console.log("curr_page == LAST PAGE -  gggggggggg" + "%%MLAB_CT_FUNC_GETNUMBEROFPAGES%%" + "side");
+                    if ($(".mlab_nav_next_page").hasClass('mlab_hide')) {
+                       // do nothing
+                    } else {
+                         //hide the next button on the last page
+                        $(".mlab_nav_next_page").addClass('mlab_hide');
+                    }
+                    
+                     if ($(".mlab_nav_previous_page").hasClass('mlab_hide')) {
+                        $(".mlab_nav_previous_page").removeClass('mlab_hide');
+                    }
+                    break;
+
+                default:
+                    if ($(".mlab_nav_next_page").hasClass('mlab_hide')) {
+                        $(".mlab_nav_next_page").removeClass('mlab_hide');
+                    }
+                    if ($(".mlab_nav_previous_page").hasClass('mlab_hide')) {
+                        $(".mlab_nav_previous_page").removeClass('mlab_hide');
+                    }
+                    break;
+            }
+       
+    });
+         
+</script>
+
+</body></html>

@@ -1,0 +1,12 @@
+#-----------------------------------------------------
+# Login, security
+#-----------------------------------------------------
+
+layout.login: Log in
+layout.login.headline: Login
+layout.logout.info: You must log out of the previous user before you can log in
+layout.logout: Log out
+security.login.username: Username
+security.login.password: Password
+security.login.remember_me: Remember me
+security.login.submit: Login

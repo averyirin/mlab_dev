@@ -1,0 +1,83 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Cecilie Jackbo Gran/Sinett 3.0 programme (firstname.middlename.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+
+{#    
+ * This outputs the megamenu for the base and the editor.
+#}
+
+    <li id="mlab_menu_dropdown"><a target="_top" href="#" class="drop"><img class="mlab_basic_menu_drop" src="/img/logo_menu.png" alt="logo" /></a><!-- Begin 4 columns Item -->
+
+        <div class="dropdown_2columns "><!-- Begin 4 columns container -->
+
+            <div class="col_1"> <!-- Links col -->
+                <h3>{% trans %}app.builder.menu.heading.links{% endtrans %}</h3>
+                             
+                {% set currentPath = path(app.request.attributes.get('_route'),
+                           app.request.attributes.get('_route_params')) %} <!-- Finds the page you are on -->
+                   
+                 {% if app.user == null %} <!-- If not loged in -->
+                    <p>{% trans %}app.builder.menu.login.info{% endtrans %}:<br>
+                        <a target="_top" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    </p>
+                    
+                {% else %} <!-- If loged in -->
+                    {% if app.user.roles[0] != "ROLE_USER" or path('app_builder_index') not in currentPath %} <!-- If no liks to show - hide the links info -->
+                        <p>{% trans %}app.builder.menu.links.info{% endtrans %}:</p>
+                    {% endif %} 
+                    
+                    <!-- if path('app_builder_index') not in currentPath  %} If on app list page - don't show the link to this page  -->
+                        <a target="_top" href="{{ path('app_builder_index')}}">{% trans %}app.builder.menu.link.app.builder{% endtrans %}</a>
+                   
+                     
+                        {% if is_granted("ROLE_ADMIN") %} <!-- Show this links if not on the page and have the role ROLE_ADMIN or higher  -->
+                            {%  if path('admin_apps') not in currentPath  %}
+                                <a target="_top" href="{{ path('admin_apps')}}">{% trans %}app.builder.menu.link.admin.app{% endtrans %}</a>
+                            {% endif %} 
+                            {% if path('admin_users') not in currentPath %}
+                                <a target="_top" href="{{ path('admin_users')}}">{% trans %}app.builder.menu.link.admin.users{% endtrans %}</a>
+                            {% endif %} 
+                        {% endif %} 
+                                
+                        {% if is_granted("ROLE_SUPER_ADMIN") %} <!-- Show this link if not on the page and have the role ROLE_SUPER_ADMIN  -->
+                            {% if path('system') not in currentPath %}
+                                <a target="_top" href="{{ path('system')}}">{% trans %}app.builder.menu.link.system{% endtrans %}</a>
+                            {% endif %}
+                        {% endif %}
+                                
+                        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") %}
+                                <br>
+                        {% endif %}
+                                
+                        {% if path('app_builder_index') in currentPath  %} <!-- If on app list page - show the info  -->
+                            <p>{% trans %}app.builder.menu.links.app.info{% endtrans %}</p><br>
+                        {% endif %} 
+                    
+                {% endif %}
+                        
+            </div>
+
+            <div class="col_1"> <!-- User col -->
+                <h3>{% trans %}app.builder.menu.user.info.heading{% endtrans %}</h3>
+                
+                {% if app.user == null %} <!-- If not loged in -->
+                    <p>{% trans %}app.builder.menu.login.info{% endtrans %}:<br>
+                        <a target="_top" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    </p>
+                {% else %} <!-- If loged in -->
+                    <p>{% trans %}app.builder.menu.log.info{% endtrans %}:<br>
+                        <b>{{ app.user.username }}</b><br><br>
+                    
+                    <a target="_top" href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></p>
+                {% endif %}
+            </div>
+         
+        </div><!-- End 4 columns container -->
+        
+    </li><!-- End 4 columns Item -->

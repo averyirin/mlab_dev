@@ -1,0 +1,33 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+
+imports:
+    - { resource: config.yml }
+
+#framework:
+#    validation:
+#        cache: apc
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+
+assetic:
+    use_controller: false

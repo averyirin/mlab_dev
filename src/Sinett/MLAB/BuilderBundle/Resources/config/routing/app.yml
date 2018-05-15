@@ -1,0 +1,141 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# @author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+app:
+    path:  /
+    defaults: { _controller: "SinettMLABBuilderBundle:App:index" }
+
+app_show:
+    path:  /{id}/show
+    defaults: { _controller: "SinettMLABBuilderBundle:App:show" }
+
+app_new:
+    path:  /new
+    defaults: { _controller: "SinettMLABBuilderBundle:App:new" }
+
+app_create:
+    path:  /create
+    defaults: { _controller: "SinettMLABBuilderBundle:App:create" }
+    requirements: { methods: post }
+
+app_edit:
+    path:  /{id}/edit
+    defaults: { _controller: "SinettMLABBuilderBundle:App:edit" }
+
+app_update:
+    path:  /{id}/update
+    defaults: { _controller: "SinettMLABBuilderBundle:App:update" }
+    requirements: { methods: post|put }
+
+app_delete:
+    path:  /{id}/delete
+    defaults: { _controller: "SinettMLABBuilderBundle:App:delete" }
+
+app_remove_from_appstore:
+    path:  /{id}/removeAppStore
+    defaults: { _controller: "SinettMLABBuilderBundle:App:removeAppStore" }
+
+app_recall:
+    path:  /{id}/recall
+    defaults: { _controller: "SinettMLABBuilderBundle:App:recall" }
+
+app_builder_index:
+    path:   /builder/
+    defaults: { _controller: "SinettMLABBuilderBundle:App:builder" }
+
+app_builder_editor:
+    path:   /builder/{id}/{page_num}/build
+    defaults: { _controller: "SinettMLABBuilderBundle:App:buildApp" }
+
+app_builder_page_get:
+    path:   /builder/{app_id}/{page_num}/{uid}/{app_open_mode}/page_get
+    defaults: { _controller: "SinettMLABBuilderBundle:App:getPage", app_open_mode:false }
+
+app_builder_editor_closed:
+    path:   /builder/{uid}/editor_closed
+    defaults: { _controller: "SinettMLABBuilderBundle:App:closeEditor" }
+
+app_builder_page_save:
+    path:   /builder/{app_id}/{page_num}/{old_checksum}/page_put
+    defaults: { _controller: "SinettMLABBuilderBundle:App:putPage" }
+    requirements: { methods: post }
+
+app_builder_page_new:
+    path:   /builder/{app_id}/{uid}/page_new
+    defaults: { _controller: "SinettMLABBuilderBundle:App:newPage" }
+    requirements: { methods: post }
+
+app_builder_page_copy:
+    path:   /builder/{app_id}/{page_num}/{uid}/page_copy
+    defaults: { _controller: "SinettMLABBuilderBundle:App:copyPage" }
+
+app_builder_page_delete:
+    path:   /builder/{app_id}/{page_num}/{uid}/page_delete
+    defaults: { _controller: "SinettMLABBuilderBundle:App:deletePage" }
+    
+app_builder_page_reorder:
+    path:   /builder/{app_id}/{from_page}/{to_page}/{uid}/page_reorder
+    defaults: { _controller: "SinettMLABBuilderBundle:App:reorderPage" }
+    
+app_builder_app_unlock:
+    path:   /builder/app_removelocks
+    defaults: { _controller: "SinettMLABBuilderBundle:App:removeLocks" }
+
+app_builder_copy_app:
+    path:   /builder/{id}/copy
+    defaults: { _controller: "SinettMLABBuilderBundle:App:copyApp" }
+
+app_builder_component_added:
+    path:   /builder/{app_id}/{comp_id}/component_added
+    defaults: { _controller: "SinettMLABBuilderBundle:App:componentAdded" }
+
+app_builder_component_upload:
+    path:   /builder/{app_id}/{comp_id}/component_upload
+    defaults: { _controller: "SinettMLABBuilderBundle:App:componentUpload" }
+    requirements: { methods: post }
+
+app_builder_feature_add:
+    path:   /builder/{app_id}/{comp_id}/feature_add
+    defaults: { _controller: "SinettMLABBuilderBundle:App:featureAdd" }
+
+app_builder_storage_plugin_add:
+    path:   /builder/{app_id}/{storage_plugin_id}/storage_plugin_add
+    defaults: { _controller: "SinettMLABBuilderBundle:App:storagePluginAdd" }
+
+app_builder_load_variables:
+    path:   /builder/{app_id}/{page_num}/load_variables
+    defaults: { _controller: "SinettMLABBuilderBundle:App:loadBuilderVariables" }
+
+app_builder_load_components:
+    path:   /builder/{app_id}/load_components
+    defaults: { _controller: "SinettMLABBuilderBundle:App:loadBuilderComponents" }
+
+app_builder_get_uploaded_files:
+    path:   /builder/{app_id}/{file_type}/get_uploaded_files
+    defaults: { _controller: "SinettMLABBuilderBundle:App:getUploadedFiles" }
+
+app_list_set_active_version:
+    path:   /builder/{app_id}/{version}/set_active_version
+    defaults: { _controller: "SinettMLABBuilderBundle:App:setActiveVersion" }
+
+app_list_create_new_version:
+    path:   /builder/{app_id}/{increment}/create_new_version
+    defaults: { _controller: "SinettMLABBuilderBundle:App:createNewVersion" }
+
+app_list_create_new_branch:
+    path:   /builder/{app_id}/create_new_branch
+    defaults: { _controller: "SinettMLABBuilderBundle:App:createNewBranch" }
+
+app_preview:
+    path:   /builder/{app_id}/preview
+    defaults: { _controller: "SinettMLABBuilderBundle:App:appPreview" }
+
+app_import_file:
+    path:  /importFile
+    defaults: { _controller: "SinettMLABBuilderBundle:App:importFile" }
+    requirements: { methods: post }
+

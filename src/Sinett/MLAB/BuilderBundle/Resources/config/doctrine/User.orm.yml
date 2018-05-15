@@ -1,0 +1,78 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# @author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+
+# user details, uses FosUserbundle for management
+Sinett\MLAB\BuilderBundle\Entity\User:
+  type: entity
+  table: usr
+  repositoryClass: Sinett\MLAB\BuilderBundle\Entity\UserRepository
+  indexes:
+    username_index:
+      columns: [ username ]
+    email_index:
+      columns: [ email ]
+    password_index:
+      columns: [ password ]
+    created_index:
+      columns: [ created ]
+    updated_index:
+      columns: [ updated ]
+  
+  id:
+    id: 
+      type: integer
+      generator:
+          strategy: AUTO
+
+  fields:
+    created:
+      type: date
+      gedmo:
+        timestampable:
+          on: create
+    
+    updated:
+      type: datetime
+      gedmo:
+        timestampable:
+          on: update
+    
+    locale:
+      type: string
+      length: 6
+      fixed: false
+      nullable: true
+
+        
+  oneToMany:
+    apps:
+      targetEntity: App
+      mappedBy: user
+
+    appsUpdatedBy:
+      targetEntity: Sinett\MLAB\BuilderBundle\Entity\App
+      mappedBy: updatedBy
+      joinColumn:
+        name: id
+        referencedColumnName: updatedby_id
+
+  manyToMany:
+    groups:
+      targetEntity: Group
+      inversedBy: users
+      joinTable:
+        name: users_groups
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          group_id:
+            referencedColumnName: id
+      cascade: [persist]
+      
+  lifecycleCallbacks: {  }

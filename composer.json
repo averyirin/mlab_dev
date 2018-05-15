@@ -1,0 +1,76 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.8",
+        "doctrine/orm": ">=2.5.5,<2.5.x-dev",
+        "doctrine/doctrine-bundle": "1.6.4",
+        "twig/extensions": "1.4.0",
+        "symfony/swiftmailer-bundle": "2.3.11",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/distribution-bundle": "~4.0",
+        "sensio/framework-extra-bundle": "3.0.16",
+        "sensio/generator-bundle": "3.0.8",
+        "incenteev/composer-parameter-handler": "2.1.2",
+        "friendsofsymfony/user-bundle": "dev-master",
+        "gedmo/doctrine-extensions": "2.4.33",
+        "symfony/yaml": "2.8.12",
+        "symfony/assetic-bundle": "^2.8",
+        "willdurand/js-translation-bundle": "2.6.1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "\\Sinett\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "2.8.x-dev"
+        },
+        "mlab_specific": {
+            "js_libraries": {
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/bowser.js": "https://raw.githubusercontent.com/ded/bowser/v0.7.3/bowser.js", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.contextmenu.js": "https://raw.githubusercontent.com/joewalnes/jquery-simple-context-menu/master/jquery.contextmenu.js", 
+                "web/css/jquery.contextmenu.css": "https://raw.githubusercontent.com/joewalnes/jquery-simple-context-menu/master/jquery.contextmenu.css", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery-2.1.4.js": "https://code.jquery.com/jquery-2.1.4.js", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.mobile-1.4.5.js": "http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.qrcode-0.12.0.js": "https://release.larsjung.de/jquery-qrcode/jquery-qrcode-0.12.0.zip",
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.qtip-2.2.0.js": "http://cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.js", 
+                "web/css/jquery-qtip.css": "http://cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.css", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/spin.js": "https://raw.githubusercontent.com/fgnass/spin.js/3b987bccf17de20b5e394b25d6ebc1c17511d8e0/spin.js",
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.spin.js": "https://raw.githubusercontent.com/fgnass/spin.js/3b987bccf17de20b5e394b25d6ebc1c17511d8e0/jquery.spin.js",
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery-ui.js|web/css/jquery-ui.css":  "https://jqueryui.com/resources/download/jquery-ui-1.11.4.zip", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.form.js": "https://malsup.github.io/jquery.form.js", 
+                "src/Sinett/MLAB/BuilderBundle/Resources/public/js/jquery.uploadfile-4.0.11.js": "https://raw.githubusercontent.com/hayageek/jquery-upload-file/master/js/jquery.uploadfile.js", 
+                "web/css/jquery.uploadfile.css": "https://raw.githubusercontent.com/hayageek/jquery-upload-file/master/css/uploadfile.css"
+            }
+        }
+    }
+}

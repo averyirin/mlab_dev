@@ -1,0 +1,42 @@
+parameters:
+  database_driver: pdo_mysql
+  database_host: localhost
+  database_port: "3306"
+  database_name: mlab
+  database_user: mlab
+  database_password: mlabRocks!1
+  mailer_transport: smtp
+  mailer_host: localhost
+  mailer_user: mlab
+  mailer_password: mlabRocks!1
+  locale: en_GB
+  secret: abc123
+  mlab:
+    convert:
+      python_bin: /usr/bin/python
+    ws_socket:
+      url_client: ws://localhost:8080/
+      url_server: http://localhost:8080/
+    paths:
+      app: /var/www/html/mlab/mlab_elements/apps/
+      component: /var/www/html/mlab/mlab_elements/components/
+      template: /var/www/html/mlab/mlab_elements/templates/
+      icon: /var/www/html/mlab/mlab_elements/icons/
+    urls:
+      app: /mlab_elements/apps/
+      component: /mlab_elements/components/
+      template: /mlab_elements/templates/
+      icon: /mlab_elements/icons/
+      icon_font: /img/oswald_bold.ttf
+    compiler_service:
+      supported_platforms:
+        - ios
+        - android
+      url: localhost:8282/
+      protocol: http
+      passphrase: ""
+      app_creator_identifier: com.test.apps
+      rsync_bin: /usr/bin/rsync
+      rsync_url: user@localhost::cs_inbox
+      rsync_password: ""
+  mlab_path: /var/www/html/mlab

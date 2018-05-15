@@ -1,0 +1,54 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# @author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+
+# This file is used by the Mlab installation file as a starting point for creating a configuration file.
+# The settings here are specific to the server installation, look at the parameters: section in config.yml for app variables not dependent on the server
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: 3306
+    database_name: mlab
+    database_user: mlab
+    database_password: mlabRocks!1
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en_GB
+    secret: abc123
+    mlab_path: /nrc/mlab
+    mlab: 
+        convert:
+            python_bin: /usr/bin/python
+
+        ws_socket:
+            url_client: ws://localhost:8080/
+            url_server: http://localhost:8080/
+
+        paths:
+            app: %mlab_path%/mlab_elements/apps/
+            component: %mlab_path%/mlab_elements/components/
+            template: %mlab_path%/mlab_elements/templates/
+            icon: %mlab_path%/mlab_elements/icons/
+        
+        urls:
+            app: /mlab_elements/apps/
+            component: /mlab_elements/components/
+            template: /mlab_elements/templates/
+            icon: /mlab_elements/icons/
+            icon_font: /img/oswald_bold.ttf
+          
+        compiler_service:
+            supported_platforms: [ios, android]
+            url: localhost:8282/
+            protocol: http
+            passphrase: 
+            app_creator_identifier: com.test.apps
+            rsync_bin: /usr/bin/rsync
+            rsync_url: user@{compiler_service_url}::cs_inbox
+            rsync_password: 

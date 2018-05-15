@@ -1,0 +1,42 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+{% extends app.request.xmlHttpRequest ? '::ajax.html.twig' : '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Menu list</h1>
+
+    <table class="records_list" id="table_menu">
+        <thead>
+            <tr>
+                <th>Contenthtml</th>
+                <th>Contentphp</th>
+                <th>Help</th>
+                <th>Url</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        	{{ include( 'SinettMLABBuilderBundle:Menu:show.html.twig', { 'entity': entity, 'class': 'menu_parent' } ) }}
+        	{% for sub_entity in entity.children %}
+        		{{ include( 'SinettMLABBuilderBundle:Menu:show.html.twig', { 'entity': sub_entity, 'class': 'menu_child' } ) }}
+        	{% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('menu_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

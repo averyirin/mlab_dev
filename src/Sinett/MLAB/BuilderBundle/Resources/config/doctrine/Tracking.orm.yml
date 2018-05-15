@@ -1,0 +1,56 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# @author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+
+# This is used to track everything a user does with an app to learn more about where they go wrong, etc
+Sinett\MLAB\BuilderBundle\Entity\Tracking:
+  type: entity
+  table: tracking
+  repositoryClass: Sinett\MLAB\BuilderBundle\Entity\TrackingRepository
+  indexes:
+    created_index:
+      columns: [ created ]
+    action_index:
+      columns: [ action ]
+
+  id:
+    id: 
+      type: integer
+      generator:
+          strategy: AUTO
+
+  fields:
+    created:
+      type: date
+      gedmo:
+        timestampable:
+          on: create
+
+    action:
+        type: string
+        length: 255
+        fixed: false
+        nullable: false
+        
+    payload:
+      type: text
+          
+  oneToOne:
+    component:
+      targetEntity: Component
+      inversedBy: trackings
+
+    user:
+      targetEntity: User
+      inversedBy: trackings
+          
+    app:
+      targetEntity: App
+      inversedBy: trackings
+          
+
+  lifecycleCallbacks: {  }

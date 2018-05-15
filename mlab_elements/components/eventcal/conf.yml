@@ -1,0 +1,58 @@
+# Configuration file for calendar component
+
+autorun_on_create: custom_set_options
+category: serviceconnections
+category_name: {nb_NO: Serviceconnections, en_GB: Serviceconnections}
+# compatible (array of Strings, optional)
+credentials: ["apikey"]
+# custom (Object (key/value style), required if custom functions are written in the code_dt.js code, see comment)
+developer: Arild Bergh @ Sinett/FFI.no
+# display_dependent (Boolean, optional)
+experimental: true
+extended_name: { nb_NO: Google Kalender, en_GB: Google Calendar, default: Google Calendar }
+# extended_tooltip 
+# feature (Boolean, optional)
+footer_tip: { nb_NO: Google Kalender brukes for a vise en offentlig kalender, en_GB: Google calendar is used to share a public calendar, default: Google calendar is used to share a public calendar }
+html: <div class="mc_text mc_display mc_medium mlab_cp_eventcal" data-mlab-cp='eventcal'></div>
+# inherit (String, optional)
+# messages (Array of objects of strings, optional)
+name: eventcal
+# paste_allowed (Boolean, optional)
+# placeholder (String, optional)
+# plugins cordova-sms-plugin
+# process_keypress (Boolean, optional)
+required_libs: { designtime: ["eventcal.css"], runtime: ["eventcal.css"]}
+# storage_plugin (Boolean or array of strings, required if component is a storage plugin)
+tooltip: { nb_NO: Google Event Kalender, en_GB: Google Event Calendar, default: Google Event Calendar }
+# unique (Boolean, optional)
+version: 0.9
+# visible (Boolean)
+
+custom:
+    settings: {calendarId: '', fromDate: '', toDate: ''}
+    html_event: |
+        <details class="mlab_cp_eventcal_block">
+            <summary class="mc_heading mlab_eventcal_summary_block">
+                <span class="mc_text mc_info mc_small mlab_cp_eventcal_time">%%time%%</span>
+                <span class="mc_text mc_info mc_large mlab_cp_eventcal_summary">%%summary%%</span>
+            </summary>
+            <div class="mc_text mc_info mc_medium mlab_cp_eventcal_description">%%description%%</div>
+            <div class="mc_text mc_info mc_medium mlab_cp_eventcal_location">%%location%%</div>
+        </details>
+        
+    html_days: |
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul class="mc_text mc_info mc_large mlab_cp_eventcal_tab_list">
+                    %%TABS%%
+                </ul>
+            </div>
+            %%TAB_CONTENT%%
+        </div>
+
+    errorMsg: 'No events in calendar'
+    time_format: ShortTime
+    set_options:
+        icon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcJJREFUeNq8VttxgkAUXVYz8RM7gApCCVJB4l/+ohWgFUgqMKlAO1AqgBLSgXQQP5PJ89yZK1kJ+8DXnTnDDOzes/d1FiEc7eq6twJ+NJi4+pHC3e4M325OSogIfMuS4NQRRkd+/0+IKCIgB+ZAoLwf4DGz+PGxLlUzQfuABfus3nvKghyPgeKkAEpg1KLOW+AZeKil+fHj/S2tCEFGThfivBaCtJQc7kyc3xa7Gk7adNkRRjUdeDS4LWu0BDJqFOCW59N33F94Dc2isxcgRh22tRml7KwcR2Ms4SCmLrIsLJvIyKgR8Bhy9KbMDLF2KWpz86rRypGDGs01ezfqXEvlpIXB39ohXZkuO5yFRmnzz92qe9JmqINLU+nWBKq0SSaj1s4NESYOt0liuEk2zCE6fHmSCvRM10+n2w2+vz4zDVluEQ/yfQ8fUdvBL3mESuVaStooFRGmF9JSsiePU7K5QIdSQ4aS1WN6geimxCV56JeslfUTrQ9wXCg1rnR4J2vq4E8VVRljQR8gjYzZiUtDkd4SQtbXdc333y+GZc4CrrPJYos8uhMyqW18+k23yTE/wqbTb13I2hKWBx5mz34FGAB536FMT5pnwQAAAABJRU5ErkJggg==
+        tooltip: { nb_NO: Rediger alternativer, en_GB: Edit options, default: Edit options }
+        order: 1

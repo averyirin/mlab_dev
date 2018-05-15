@@ -1,0 +1,35 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+@author Cecilie Jackbo Gran/Sinett 3.0 programme (firstname.middlename.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+{% extends app.request.xmlHttpRequest ? '::ajax.html.twig' : '::base.html.twig' %}
+
+{% block body -%}
+
+    <table class="records_list" id="table_user">
+        <thead>
+            <tr>
+                <th>{% trans %}app.admin.users.username{% endtrans %}</th>
+                <th>{% trans %}app.admin.users.email{% endtrans %}</th>
+                <th>{% trans %}app.admin.users.groups{% endtrans %}</th>
+                <th>{% trans %}app.admin.users.last.login{% endtrans %}</th>
+                <th>{% trans %}app.admin.users.enabled{% endtrans %}</th>
+                <th> 
+                	<a class="mlab_button_new_user" href="{{ path('user_new') }}" title="{% trans %}app.admin.users.tooltip.new{% endtrans %}"></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        	{{ include( 'SinettMLABBuilderBundle:User:show.html.twig', { 'entity': entity } ) }}
+        {% endfor %}
+        </tbody>
+    </table>
+	
+{% endblock %}

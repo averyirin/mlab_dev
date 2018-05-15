@@ -1,0 +1,46 @@
+# @copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+# @license Proprietary and confidential
+# @author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+# 
+# Unauthorized copying of this file, via any medium is strictly prohibited 
+# 
+# For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+Sinett\MLAB\BuilderBundle\Entity\AppVersion:
+  type: entity
+  table: app_version
+  repositoryClass: Sinett\MLAB\BuilderBundle\Entity\AppVersionRepository
+  
+  indexes:
+    app_index:
+      columns: [ app_id ]
+    enabled_index:
+      columns: [ enabled ]
+    version_index:
+      columns: [ version ]
+
+  id:
+    id: 
+      type: integer
+      generator:
+          strategy: AUTO
+
+  fields:
+    version:
+      type: float
+      options:
+        default: 1
+        
+    enabled:
+      type: integer
+      options:
+        default: 1      
+            
+# link to apps for a version
+  manyToOne:
+    app:
+      targetEntity: App
+      inversedBy: appVersions
+      joinColumn:
+        name: app_id
+        referencedColumnName: id
+      

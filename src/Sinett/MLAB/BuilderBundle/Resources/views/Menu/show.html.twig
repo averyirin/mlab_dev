@@ -1,0 +1,30 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+<tr id="row_menu_{{ entity.id }}" class="{{ class }}">
+    <td>{{ entity.contentHtml }}</td>
+    <td>{{ entity.contentPhp }}</td>
+    <td>{{ entity.help }}</td>
+    <td>{{ entity.url }}</td>
+    <td>
+    <ul>
+        <li>
+            <a href="{{ path('menu_delete', { 'id': entity.id }) }}">delete</a>
+        </li>
+        <li>
+            <a href="{{ path('menu_edit', { 'id': entity.id }) }}">edit</a>
+        </li>
+        {% if class == 'menu_parent' %}
+	        <li>
+	            <a href="{{ path('menu_new', { 'id': entity.id }) }}">Add sub menu</a>
+	        </li>
+        {% endif %}
+    </ul>
+    </td>
+</tr>

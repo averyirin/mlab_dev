@@ -1,0 +1,31 @@
+{#
+@copyright Copyright (c) 2013-2016, Norwegian Defence Research Establishment (FFI) - All Rights Reserved
+@license Proprietary and confidential
+@author Cecilie Jackbo Gran/Sinett 3.0 programme (firstname.middlename.lastname@ffi.no)
+@author Arild Bergh/Sinett 3.0 programme (firstname.lastname@ffi.no)
+
+Unauthorized copying of this file, via any medium is strictly prohibited 
+
+For the full copyright and license information, please view the LICENSE_MLAB file that was distributed with this source code.
+#}
+{% extends app.request.xmlHttpRequest ? '::ajax.html.twig' : '::base.html.twig' %}
+
+{% block body -%}
+
+    <table class="records_list" id="table_help">
+        <thead>
+            <tr>
+                <th>{% trans %}app.system.admin.help.route{% endtrans %}</th>
+                <th>{% trans %}app.system.admin.help.message{% endtrans %}</th>
+                <th> 
+                	<a class="mlab_button_new_component" href="{{ path('help_new') }}" title="{% trans %}app.system.admin.help.tooltip.new{% endtrans %}"></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+	        {% for entity in entities %}
+		        {{ include( 'SinettMLABBuilderBundle:Help:show.html.twig', { 'entity': entity } ) }}
+	        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
